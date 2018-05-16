@@ -104,6 +104,13 @@ int mapstrings_transconst(ScriptVariant **varlist, int paramCount)
         ICMPCONST(FLAG_FORWARD)
         ICMPCONST(FLAG_BACKWARD)
 
+        // Binding animation control flags.
+        ICMPCONST(BINDING_ANI_NONE)
+        ICMPCONST(BINDING_ANI_ANIMATION_KILL)
+        ICMPCONST(BINDING_ANI_ANIMATION_MATCH)
+        ICMPCONST(BINDING_ANI_FRAME_KILL)
+        ICMPCONST(BINDING_ANI_FRAME_MATCH)
+
         // Boss no slow flags.
         ICMPCONST(BOSS_SLOW_OFF)
         ICMPCONST(BOSS_SLOW_ON)
