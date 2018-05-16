@@ -21409,24 +21409,53 @@ void adjust_bind(entity *e)
     {
         if(e->binding.ani_bind)
         {
-            if(e->animnum != e->binding.ent->animnum)
+            // Kill on no animation match?
+            if(e->binding.ani_bind & BINDING_ANI_ANIMATION_KILL)
             {
+                // If we don't have a match for target's animation,
+                // then self destruct.
                 if(!validanim(e, e->binding.ent->animnum))
                 {
-                    if(e->binding.ani_bind & 4)
-                    {
-                        kill(e);
-                    }
+                    kill(e);
                     e->binding.ent = NULL;
                     return;
                 }
-                ent_set_anim(e, e->binding.ent->animnum, 1);
             }
-            if(e->animpos != e->binding.ent->animpos && e->binding.ani_bind & 2)
+
+            // Match to target's animation.
+            if(e->binding.ani_bind & BINDING_ANI_ANIMATION_MATCH)
             {
-                update_frame(e, e->binding.ent->animpos);
+                // Bind to target's animation.
+                if(e->animnum != e->binding.ent->animnum)
+                {
+                    ent_set_anim(e, e->binding.ent->animnum, 1);
+                }
+            }
+
+            // Kill on no frame match?
+            if(e->binding.ani_bind & BINDING_ANI_FRAME_KILL)
+            {
+                // If target entity's current animation has more
+                // frames than ours, we can't match, so self destruct.
+                if(e->binding.ent->animation->numframes > e->modeldata.animation[e->binding.ent->animnum]->numframes)
+                {
+                    kill(e);
+                    e->binding.ent = NULL;
+                    return;
+                }
+            }
+
+            // Match target's frame?
+            if(e->binding.ani_bind & BINDING_ANI_FRAME_MATCH)
+            {
+                // If target is on a different frame, update ours to match.
+                if(e->animpos != e->binding.ent->animpos)
+                {
+                    update_frame(e, e->binding.ent->animpos);
+                }
             }
         }
+
         if (e->binding.bind_toggle.z) e->position.z = e->binding.ent->position.z + e->binding.offset.z;
         if (e->binding.bind_toggle.y) e->position.y = e->binding.ent->position.y + e->binding.offset.y;
         e->sortid = e->binding.ent->sortid + e->binding.sortid;
