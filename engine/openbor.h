@@ -831,6 +831,7 @@ typedef enum
     ATK_PIT,
     ATK_LIFESPAN,
     ATK_TIMEOVER,
+    ATK_UNSUMMON,
     MAX_ATKS,                       //Default max attack types (must be below all attack types in enum to get correct value)
     STA_ATKS        = (MAX_ATKS-10)
 } e_attack_types;
