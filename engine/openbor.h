@@ -906,6 +906,20 @@ typedef enum
     COLLISION_COORDINATES_PROP_Y
 } e_collision_coordinates;
 
+// Caskey, Damon V.
+// 2018-05-16
+//
+// Binding animation properties. Control how
+// the binding entity will match target's animation.
+typedef enum
+{
+    BINDING_ANI_NONE            = 0x00000000,   // Do nothing.
+    BINDING_ANI_ANIMATION_MATCH = 0x00000001,   // Match animation ID.
+    BINDING_ANI_FRAME_MATCH     = 0x00000002,   // Match animation frame.
+    BINDING_ANI_ANIMATION_KILL  = 0x00000004,    // Kill self if animation match isn't possible.
+    BINDING_ANI_FRAME_KILL      = 0x00000008    // Kill self if frame match isn't possible.
+} e_binding_animation;
+
 typedef enum
 {
     /*
