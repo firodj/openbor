@@ -26,13 +26,9 @@ int mapstrings_binding(ScriptVariant **varlist, int paramCount)
     static const char *proplist[] =
     {
         "animation",
-        "bind_x",
-        "bind_y",
-        "bind_z",
+        "bind",
         "direction",
-        "offset_x",
-        "offset_y",
-        "offset_z",
+        "offset",
         "sort_id",
         "target"
     };
@@ -113,24 +109,10 @@ HRESULT openbor_get_binding_property(ScriptVariant **varlist , ScriptVariant **p
 
             break;
 
-        case _BINDING_BIND_X:
+        case _BINDING_BIND:
 
-            ScriptVariant_ChangeType(*pretvar, VT_INTEGER);
-            (*pretvar)->lVal = (LONG)handle->bind_toggle.x;
-
-            break;
-
-        case _BINDING_BIND_Y:
-
-            ScriptVariant_ChangeType(*pretvar, VT_INTEGER);
-            (*pretvar)->lVal = (LONG)handle->bind_toggle.y;
-
-            break;
-
-        case _BINDING_BIND_Z:
-
-            ScriptVariant_ChangeType(*pretvar, VT_INTEGER);
-            (*pretvar)->lVal = (LONG)handle->bind_toggle.z;
+            ScriptVariant_ChangeType(*pretvar, VT_PTR);
+            (*pretvar)->ptrVal = (VOID *)&handle->bind_toggle;
 
             break;
 
@@ -141,24 +123,10 @@ HRESULT openbor_get_binding_property(ScriptVariant **varlist , ScriptVariant **p
 
             break;
 
-        case _BINDING_OFFSET_X:
+        case _BINDING_OFFSET:
 
-            ScriptVariant_ChangeType(*pretvar, VT_INTEGER);
-            (*pretvar)->lVal = (LONG)handle->offset.x;
-
-            break;
-
-        case _BINDING_OFFSET_Y:
-
-            ScriptVariant_ChangeType(*pretvar, VT_INTEGER);
-            (*pretvar)->lVal = (LONG)handle->offset.y;
-
-            break;
-
-        case _BINDING_OFFSET_Z:
-
-            ScriptVariant_ChangeType(*pretvar, VT_INTEGER);
-            (*pretvar)->lVal = (LONG)handle->offset.z;
+            ScriptVariant_ChangeType(*pretvar, VT_PTR);
+            (*pretvar)->ptrVal = (VOID *)&handle->offset;
 
             break;
 
@@ -259,31 +227,9 @@ HRESULT openbor_set_binding_property(ScriptVariant **varlist, ScriptVariant **pr
 
             break;
 
-        case _BINDING_BIND_X:
+        case _BINDING_BIND:
 
-            if(SUCCEEDED(ScriptVariant_IntegerValue(varlist[ARG_VALUE], &temp_int)))
-            {
-                handle->bind_toggle.x = temp_int;
-
-            }
-
-            break;
-
-        case _BINDING_BIND_Y:
-
-            if(SUCCEEDED(ScriptVariant_IntegerValue(varlist[ARG_VALUE], &temp_int)))
-            {
-                handle->bind_toggle.y = temp_int;
-            }
-
-            break;
-
-        case _BINDING_BIND_Z:
-
-            if(SUCCEEDED(ScriptVariant_IntegerValue(varlist[ARG_VALUE], &temp_int)))
-            {
-                handle->bind_toggle.z = temp_int;
-            }
+            // Read only.
 
             break;
 
@@ -296,30 +242,9 @@ HRESULT openbor_set_binding_property(ScriptVariant **varlist, ScriptVariant **pr
 
             break;
 
-        case _BINDING_OFFSET_X:
+        case _BINDING_OFFSET:
 
-            if(SUCCEEDED(ScriptVariant_IntegerValue(varlist[ARG_VALUE], &temp_int)))
-            {
-                handle->offset.x = temp_int;
-            }
-
-            break;
-
-        case _BINDING_OFFSET_Y:
-
-            if(SUCCEEDED(ScriptVariant_IntegerValue(varlist[ARG_VALUE], &temp_int)))
-            {
-                handle->offset.y = temp_int;
-            }
-
-            break;
-
-        case _BINDING_OFFSET_Z:
-
-            if(SUCCEEDED(ScriptVariant_IntegerValue(varlist[ARG_VALUE], &temp_int)))
-            {
-                handle->offset.z = temp_int;
-            }
+            // Read only.
 
             break;
 
