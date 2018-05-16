@@ -18008,7 +18008,7 @@ void update_frame(entity *ent, unsigned int f)
             attack.dropv.x = default_model_dropv.x;
             attack.dropv.z = default_model_dropv.z;
             attack.attack_force = self->energy_status.health_current;
-            attack.attack_type = max_attack_types;
+            attack.attack_type = ATK_UNSUMMON;
             if(self->takedamage)
             {
                 self->takedamage(self, &attack, 0);
@@ -18543,7 +18543,7 @@ void kill(entity *victim)
     if(victim->modeldata.summonkill)
     {
         attack = emptyattack;
-        attack.attack_type = max_attack_types;
+        attack.attack_type = ATK_UNSUMMON;
         attack.dropv.y = default_model_dropv.y;
         attack.dropv.x = default_model_dropv.x;
         attack.dropv.z = default_model_dropv.z;
