@@ -113,16 +113,20 @@ BUILD_SDL_IO    = 1
 BUILD_OPENGL    = 1
 BUILD_LOADGL    = 1
 BUILD_VORBIS    = 1
+BUILD_WEBM      = 1
 BUILDING        = 1
 YASM            = yasm
 CC              = $(PREFIX)gcc
 OBJTYPE         = macho
 INCLUDES        = $(DWNDEV)/include \
-                  $(DWNDEV)/include/SDL \
+                  $(DWNDEV)/include/SDL2 \
                   $(SDKPATH)/usr/include/malloc
 LIBRARIES       = $(DWNDEV)/lib
-ifeq ($(findstring darwin10, $(PREFIX)), darwin10)
-ARCHFLAGS       = -arch i386 -arch x86_64
+ifeq ($(findstring 64, $(MACHINE)), 64)
+TARGET_ARCH     = amd64
+BUILD_AMD64     = 1
+ARCHFLAGS       = -arch x86_64
+CFLAGS         += -DAMD64
 else
 BUILD_MMX       = 1
 TARGET_ARCH     = x86
@@ -442,8 +446,7 @@ OBJS            = $(MAIN)                                                       
 #----------------------------------------------------------------------------------------------------
 
 CFLAGS 	       += $(addprefix -I", $(addsuffix ", $(INCS))) $(ARCHFLAGS) -D$(TARGET_PLATFORM)
-CFLAGS 	       += -g -Wall -Werror -fsigned-char -std=gnu99
-
+CFLAGS 	       += -g -Wall -fsigned-char -std=gnu99
 
 ifndef BUILD_DARWIN
 ifdef BUILD_LINUX
@@ -453,7 +456,11 @@ endif
 
 ifndef BUILD_DEBUG
 CFLAGS 	       += -O2
+ifndef BUILD_DARWIN
 CFLAGS 	       += -fno-ident -freorder-blocks
+else
+CFLAGS 	       += -fno-ident
+endif
 ifndef BUILD_AMD64
 CFLAGS         += -fomit-frame-pointer
 endif
@@ -476,7 +483,7 @@ endif
 
 
 ifdef BUILD_DARWIN
-CFLAGS 	       += -DLINUX -headerpad_max_install_names -isysroot $(SDKPATH)
+CFLAGS 	       += -DLINUX -isysroot $(SDKPATH)
 endif
 
 
